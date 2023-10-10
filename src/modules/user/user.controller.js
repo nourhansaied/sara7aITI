@@ -32,7 +32,7 @@ export const signIn = catchAsyncError(async (req, res,next) => {
   let { email, password } = req.body;
 
     let foundedUser = await userModel.findOne({ email });
-    if (foundedUser && foundedUser.verified) {
+    if (foundedUser ) {
       let matched = bcrypt.compareSync(password, foundedUser.password);
       if (matched) {
         let token = jwt.sign({ id: foundedUser._id, name: foundedUser.name }, process.env.SECRET_KEY);
